@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'usuario.dart';
+import 'tipo.dart';
+import 'restaurante.dart';
 
 void main() {
   runApp(const MyApp());
