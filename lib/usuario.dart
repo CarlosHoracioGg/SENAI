@@ -26,7 +26,7 @@ class Usuario{
   //setters
 
   //escrita do set tradicional
-  set nome(String nome){
+  set nome(String? nome){
     _nome = nome;
   }
 
