@@ -1,44 +1,34 @@
 import 'package:flutter/material.dart';
+import 'package:mimpedir/banco/restaurante_dao.dart';
 import 'package:mimpedir/tela_cad_restaurante.dart';
+import 'restaurante.dart';
 
-class TelaHome extends StatelessWidget{
+class TelaHome extends StatefulWidget {
   TelaHome({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text('Tela Home')),
-      body:
-      Padding(padding: const EdgeInsets.all(20),
-        child:
-        Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children:[
-            Text("Lista de Restaurantes: "),
-            ElevatedButton(onPressed: () async{
-                Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => TelaCadRestaurante())
-                );
-            }, child: Text("Cadastar Restaurantes:")),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children:[
+  State<TelaHome> createState() => TelaHomeState();
+}
+class TelaHomeState extends State<TelaHome>{
+  List<Restaurante> restaurantes = [];
+  @override
 
-                Column(
-                  children:[
-                    Text("Meu Restaurante: "),
-                    Text("Comida Mexicana")
-                  ]
-                ),
-                SizedBox(width: 10),
-                ElevatedButton(onPressed: (){}, child: Text("Excluir")),
-                SizedBox(width: 10),
-                ElevatedButton(onPressed: (){}, child: Text("Excluir")),
-              ],
-            )
-          ],
-        ),
-      ),
-    );
+  void initState(){
+    super.initState();
+    carregarRestaurantes();
   }
+
+  Future<void> carregarRestaurantes() async{
+    final lista = await RestauranteDAO.listarTodos();
+    setState(() {
+      restaurantes = lista;
+    });
+  }
+  @override
+  /*Widget build(BuildContext context){
+    return Scaffold(
+
+    )
+  }*/
+
 }

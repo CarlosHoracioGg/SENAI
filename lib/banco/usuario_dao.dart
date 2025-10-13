@@ -2,6 +2,7 @@ import 'database_helper.dart';
 import '../usuario.dart';
 
 class UsuarioDAO{
+  static Usuario usuarioLogado = Usuario();
 
   //Retorna um arquivo boleano assincrono,
   //sendo o autenticar precisando do login e senha.
@@ -21,6 +22,11 @@ class UsuarioDAO{
       whereArgs: [login, senha]
     );
 
+    //comentar sobre:
+    usuarioLogado.codigo = resultado.first['cd_usuario'] as int;
+    usuarioLogado.nome = resultado.first['cd_usuario'] as String;
+    usuarioLogado.login = resultado.first['cd_usuario'] as String;
+    usuarioLogado.senha = resultado.first['cd_usuario'] as String;
     //retorna o resultado que nao esta vazio
     return resultado.isNotEmpty;
   }
