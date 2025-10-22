@@ -24,9 +24,9 @@ class UsuarioDAO{
 
     //comentar sobre:
     usuarioLogado.codigo = resultado.first['cd_usuario'] as int;
-    usuarioLogado.nome = resultado.first['cd_usuario'] as String;
-    usuarioLogado.login = resultado.first['cd_usuario'] as String;
-    usuarioLogado.senha = resultado.first['cd_usuario'] as String;
+    usuarioLogado.nome = resultado.first['nm_usuario'] as String;
+    usuarioLogado.login = resultado.first['nm_login'] as String;
+    usuarioLogado.senha = resultado.first['ds_senha'] as String;
     //retorna o resultado que nao esta vazio
     return resultado.isNotEmpty;
   }

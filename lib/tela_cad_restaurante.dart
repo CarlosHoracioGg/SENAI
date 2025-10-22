@@ -22,7 +22,7 @@ class TelaCadRestauranteState extends State<TelaCadRestaurante> {
   List<Tipo> tiposCulinaria =[];
   int? tipoCulinaria;
 
-  void initState(){
+  void intState(){
     super.initState();
     carregarTipos();
   }
