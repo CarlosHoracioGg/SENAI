@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mimpedir/tela_cad_usuario.dart';
 
 import 'tela_login.dart';
 
@@ -14,7 +15,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       // desativa o modo banner ( que exibe conteudo).
         debugShowCheckedModeBanner: false,
-        home: TelaLogin(),
+        home: TelaCadUsuario(),
     );
   }
 }

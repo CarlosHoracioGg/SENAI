@@ -31,4 +31,24 @@ class UsuarioDAO{
     return resultado.isNotEmpty;
   }
 
+  static Future<int> cadastrarUsuario(
+      String? nome, String? usuario, String? senha
+      ) async{
+
+    final db = await DatabaseHelper.getDatabase();
+    final dadosUsuario = {
+      'nm_usuario': nome,
+      'nm_login': usuario,
+      'ds_senha':senha
+    };
+
+    try{
+      final idUsuario = await db.insert('tb_usuario', dadosUsuario);
+      return idUsuario;
+    }catch(e){
+      print("Erro ao Cadastrar: $e");
+      return -1;
+    }
+  }
+
 }

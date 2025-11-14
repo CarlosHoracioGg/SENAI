@@ -88,6 +88,7 @@ class TelaCadRestauranteState extends State<TelaCadRestaurante> {
               validator: (String? value) {},
             ),*/
             SizedBox(height: 50),
+
             ElevatedButton(onPressed: () async{
               final sucesso = await RestauranteDAO.cadastarRestaurante(nomeController.text, latitudeController.text, longitudeController.text, tipoCulinaria);
 
