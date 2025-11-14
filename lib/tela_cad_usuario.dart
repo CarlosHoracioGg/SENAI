@@ -8,7 +8,7 @@ class TelaCadUsuario extends StatelessWidget {
 
 
   //Função de capturar o texto inserido nos devidos inputs.
-  final TextEditingController usuarioController = TextEditingController();
+  final TextEditingController loginController = TextEditingController();
   final TextEditingController senhaController = TextEditingController();
   final TextEditingController nomeController = TextEditingController();
 
@@ -34,7 +34,7 @@ class TelaCadUsuario extends StatelessWidget {
               //Exibe campo de inserir texto e uma decoracao pra exibir no topo "Usuario".
               TextField(
                 decoration: const InputDecoration(labelText: 'Usuário'),
-                controller: usuarioController,
+                controller: loginController,
               ),
 
               //Adiciona um espaço; exibe outro text para senha e a função de nao ver o texto (obscureText).
@@ -47,32 +47,44 @@ class TelaCadUsuario extends StatelessWidget {
 
               //Add um botão, precisando de uma ação pra executar e seu texto do botão.
               const SizedBox(height: 40),
-              ElevatedButton(onPressed: () async {
-                //objeto nome fixo que espera o envio dos dados dos inputs para o autenticar,
-                //ele envia ao banco que se estiver com sintaxe correta ele retorna sim, tornando succeso igual a sim
-                final sucesso = await UsuarioDAO.cadastrarUsuario(
-                    nomeController.text,usuarioController.text, senhaController.text);
-
-                Color corFundo = Colors.red;
-                if (sucesso > 0) {
-                  msg: '"${nomeController.text}"cadastrado com sucesso! ID: $sucesso';
-                  corFundo = Colors.green;
-
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => TelaHome())
+              ElevatedButton(
+                onPressed: () async {
+                  final sucesso = await UsuarioDAO.cadastrarUsuario(
+                    nomeController.text,
+                    loginController.text,
+                    senhaController.text,
                   );
-                } else {
-                  //Função pra exibir uma notificação(SnackBar) na tela de login efetuado.
-                  ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text("Login ou sennha inválidos."))
-                  );
-                }
-              }, child: Text("Cadastro")),
-              const SizedBox(height: 20),
+
+                  if (sucesso > 0) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text('"${nomeController.text}" cadastrado com sucesso! ID: $sucesso'),
+                        backgroundColor: Colors.green,
+                      ),
+
+                    );
+
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => TelaHome()),
+                    );
+                  } else {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text("Erro ao cadastrar usuário."),
+                        backgroundColor: Colors.red,
+                      ),
+                    );
+                  }
+                },
+                child: Text("Cadastro"),
+              ),
               ElevatedButton(onPressed: () async{
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => TelaLogin())
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => TelaLogin()),
                 );
+
               }, child: Text("Login"))
 
             ],

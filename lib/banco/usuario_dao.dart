@@ -4,6 +4,31 @@ import '../usuario.dart';
 class UsuarioDAO{
   static Usuario usuarioLogado = Usuario();
 
+  static Future<int> cadastrarUsuario(String nome, String login, String senha) async {
+    final db = await DatabaseHelper.getDatabase();
+
+    // Pega o maior ID existente na tabela
+    final resultado = await db.rawQuery('SELECT MAX(cd_usuario) as maxId FROM tb_usuario');
+    int proximoId = (resultado.first['maxId'] ?? 0) as int; // se não tiver, começa do 0
+    proximoId++; // incrementa para o novo cadastro
+
+    final dadosUsuario = {
+      'cd_usuario': proximoId,
+      'nm_usuario': nome,
+      'nm_login': login,
+      'ds_senha': senha
+    };
+
+    try {
+      await db.insert('tb_usuario', dadosUsuario);
+      return proximoId; // retorna o ID do novo usuário
+    } catch (e) {
+      print("Erro ao cadastrar: $e");
+      return -1;
+    }
+  }
+
+
   //Retorna um arquivo boleano assincrono,
   //sendo o autenticar precisando do login e senha.
   //o async é sempre quando precisa que algo ocorra para vc fazer algo,
@@ -30,25 +55,18 @@ class UsuarioDAO{
     //retorna o resultado que nao esta vazio
     return resultado.isNotEmpty;
   }
-
-  static Future<int> cadastrarUsuario(
-      String? nome, String? usuario, String? senha
-      ) async{
-
+  // a função abaixo serve pra exibir no console os dados da tb_usuario
+  /*
+  static Future imprimirUsuarios() async {
     final db = await DatabaseHelper.getDatabase();
-    final dadosUsuario = {
-      'nm_usuario': nome,
-      'nm_login': usuario,
-      'ds_senha':senha
-    };
+    final resultado = await db.query('tb_usuario');
 
-    try{
-      final idUsuario = await db.insert('tb_usuario', dadosUsuario);
-      return idUsuario;
-    }catch(e){
-      print("Erro ao Cadastrar: $e");
-      return -1;
+    if (resultado.isEmpty) {
+      print("A tabela tb_usuario está vazia.");
+    } else {
+      print("📌 Usuários cadastrados:");
+      for (var usuario in resultado) {
+        print(usuario);
     }
-  }
-
+  }*/
 }
